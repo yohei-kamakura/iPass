@@ -16,7 +16,7 @@
 
 #pragma mark - Managing the detail item
 
-- (void)setDetailItem:(id)newDetailItem {
+- (void)setDetailItem:(IPass *)newDetailItem {
 	if (_detailItem != newDetailItem) {
 	    _detailItem = newDetailItem;
 	        
@@ -28,19 +28,40 @@
 - (void)configureView {
 	// Update the user interface for the detail item.
 	if (self.detailItem) {
-	    self.detailDescriptionLabel.text = [[self.detailItem valueForKey:@"timeStamp"] description];
+		self.serviceTextField.text = self.detailItem.service;
+	    self.idTextField.text = self.detailItem.id;
+		self.passwordTextField.text = self.detailItem.password;
 	}
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+
 	[self configureView];
 }
 
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
+}
+
+- (void)done {
+	self.detailItem.service = self.serviceTextField.text;
+	self.detailItem.id = self.idTextField.text;
+	self.detailItem.password = self.passwordTextField.text;
+
+	NSError *error = nil;
+
+	if (![self.managedObjectContext save:&error]) {
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
+	}
+
+	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+		[self.navigationController popViewControllerAnimated:YES];
+	}
 }
 
 @end

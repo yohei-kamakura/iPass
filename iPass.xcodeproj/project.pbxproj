@@ -12,10 +12,11 @@
 		4709EB8E1AFBAE8400260B95 /* iPass.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4709EB8C1AFBAE8400260B95 /* iPass.xcdatamodeld */; };
 		4709EB911AFBAE8400260B95 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4709EB901AFBAE8400260B95 /* MasterViewController.m */; };
 		4709EB941AFBAE8400260B95 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4709EB931AFBAE8400260B95 /* DetailViewController.m */; };
-		4709EB971AFBAE8400260B95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4709EB951AFBAE8400260B95 /* Main.storyboard */; };
 		4709EB991AFBAE8400260B95 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4709EB981AFBAE8400260B95 /* Images.xcassets */; };
 		4709EB9C1AFBAE8400260B95 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4709EB9A1AFBAE8400260B95 /* LaunchScreen.xib */; };
 		4709EBA81AFBAE8400260B95 /* iPassTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4709EBA71AFBAE8400260B95 /* iPassTests.m */; };
+		4709EBB41AFBAF6E00260B95 /* IPass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4709EBB31AFBAF6E00260B95 /* IPass.m */; };
+		4709EBB51AFBCE6900260B95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4709EB951AFBAE8400260B95 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,8 @@
 		4709EBA11AFBAE8400260B95 /* iPassTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iPassTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4709EBA61AFBAE8400260B95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4709EBA71AFBAE8400260B95 /* iPassTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iPassTests.m; sourceTree = "<group>"; };
+		4709EBB21AFBAF6E00260B95 /* IPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPass.h; sourceTree = "<group>"; };
+		4709EBB31AFBAF6E00260B95 /* IPass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPass.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +89,7 @@
 		4709EB841AFBAE8400260B95 /* iPass */ = {
 			isa = PBXGroup;
 			children = (
+				4709EBB11AFBAF4200260B95 /* models */,
 				4709EB891AFBAE8400260B95 /* AppDelegate.h */,
 				4709EB8A1AFBAE8400260B95 /* AppDelegate.m */,
 				4709EB8F1AFBAE8400260B95 /* MasterViewController.h */,
@@ -125,6 +129,15 @@
 				4709EBA61AFBAE8400260B95 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4709EBB11AFBAF4200260B95 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				4709EBB21AFBAF6E00260B95 /* IPass.h */,
+				4709EBB31AFBAF6E00260B95 /* IPass.m */,
+			);
+			name = models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +189,7 @@
 				TargetAttributes = {
 					4709EB811AFBAE8400260B95 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 2TT593T22P;
 					};
 					4709EBA01AFBAE8400260B95 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -207,7 +221,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4709EB971AFBAE8400260B95 /* Main.storyboard in Resources */,
+				4709EBB51AFBCE6900260B95 /* Main.storyboard in Resources */,
 				4709EB9C1AFBAE8400260B95 /* LaunchScreen.xib in Resources */,
 				4709EB991AFBAE8400260B95 /* Images.xcassets in Resources */,
 			);
@@ -227,6 +241,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4709EBB41AFBAF6E00260B95 /* IPass.m in Sources */,
 				4709EB941AFBAE8400260B95 /* DetailViewController.m in Sources */,
 				4709EB911AFBAE8400260B95 /* MasterViewController.m in Sources */,
 				4709EB8B1AFBAE8400260B95 /* AppDelegate.m in Sources */,
@@ -359,6 +374,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = iPass/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -369,6 +385,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = iPass/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

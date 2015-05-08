@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IPass.h"
 
 @interface DetailViewController : UIViewController
 
-@property (strong, nonatomic) id detailItem;
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+@property (strong, nonatomic) IPass *detailItem;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) IBOutlet UITextField *serviceTextField;
+@property (strong, nonatomic) IBOutlet UITextField *idTextField;
+@property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
 
 @end
 

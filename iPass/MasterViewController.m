@@ -10,7 +10,8 @@
 #import "DetailViewController.h"
 
 @interface MasterViewController ()
-
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (IPass *)createNewIPass;
 @end
 
 @implementation MasterViewController
@@ -39,21 +40,11 @@
 }
 
 - (void)insertNewObject:(id)sender {
-	NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-	NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-	NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-	    
-	// If appropriate, configure the new managed object.
-	// Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-	[newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
-	    
-	// Save the context.
-	NSError *error = nil;
-	if (![context save:&error]) {
-	    // Replace this implementation with code to handle the error appropriately.
-	    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+		self.detailViewController.detailItem = [self createNewIPass];
+		self.detailViewController.managedObjectContext = self.fetchedResultsController.managedObjectContext;
+	} else {
+		[self performSegueWithIdentifier:@"createDetail" sender:self];
 	}
 }
 
@@ -61,12 +52,14 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ([[segue identifier] isEqualToString:@"showDetail"]) {
-	    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-	    NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-	    DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
-	    [controller setDetailItem:object];
-	    controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-	    controller.navigationItem.leftItemsSupplementBackButton = YES;
+		DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
+		NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+		IPass *selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+	    [controller setDetailItem:selectedObject];
+		[controller setManagedObjectContext:self.fetchedResultsController.managedObjectContext];
+	} else {
+		[[segue destinationViewController] setDetailItem:[self createNewIPass]];
+		[[segue destinationViewController] setManagedObjectContext:self.fetchedResultsController.managedObjectContext];
 	}
 }
 
@@ -109,7 +102,7 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 	NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-	cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
+	cell.textLabel.text = [[object valueForKey:@"service"] description];
 }
 
 #pragma mark - Fetched results controller
@@ -122,14 +115,14 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"IPass" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"service" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -204,6 +197,13 @@
     [self.tableView endUpdates];
 }
 
+- (IPass *)createNewIPass
+{
+	NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+	NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
+	IPass *newIPass = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+	return newIPass;
+}
 /*
 // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
  
